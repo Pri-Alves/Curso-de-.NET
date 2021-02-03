@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "SistemaDePagamento-Aula2-GamaAcademy/1.0.0": {
+        "runtime": {
+          "SistemaDePagamento-Aula2-GamaAcademy.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SistemaDePagamento-Aula2-GamaAcademy/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

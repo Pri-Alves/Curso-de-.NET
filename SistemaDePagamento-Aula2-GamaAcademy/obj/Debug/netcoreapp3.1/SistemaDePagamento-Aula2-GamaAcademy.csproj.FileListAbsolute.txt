@@ -1,0 +1,13 @@
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\bin\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.exe
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\bin\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.deps.json
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\bin\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.runtimeconfig.json
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\bin\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.runtimeconfig.dev.json
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\bin\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.dll
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\bin\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.pdb
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\obj\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.csprojAssemblyReference.cache
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\obj\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.AssemblyInfoInputs.cache
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\obj\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.AssemblyInfo.cs
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\obj\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.csproj.CoreCompileInputs.cache
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\obj\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.dll
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\obj\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.pdb
+C:\Users\Balves\Desktop\PESSOAL\ESTUDOS\2 We Can Code Academy\.NET\SistemaDePagamento-Aula2-GamaAcademy\obj\Debug\netcoreapp3.1\SistemaDePagamento-Aula2-GamaAcademy.genruntimeconfig.cache
