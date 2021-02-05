@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SistemaDePagamento_Aula2_GamaAcademy.Entidades.Interface;
+using System;
 
 namespace SistemaDePagamento_Aula2_GamaAcademy.Entidades
 {
-    public class Boleto
+    public class Boleto : Pagamento, IPagar
 
     {
         private const int DiasVencimento = 15;
-        private const Decimal Juros = 0.10M;
+        private const double Juros = 0.10;
+
         public Boleto(string cpf,
-                      decimal valor, 
-                      string descricao)
+            double valor,
+            string descricao)
         {
             Cpf = cpf;
             Valor = valor;
             Descricao = descricao;
             DataEmissao = DateTime.Now;
-            Confirmacao = false;
         }
 
         public Guid CodigoBarra { get; set; }
-        public decimal Valor { get; set; }
-        public DateTime DataEmissao { get; set; }
         public DateTime DataVencimento { get; set; }
-        public DateTime DataPagamento { get; set; }
-        public bool Confirmacao { get; set; }
-        public string Cpf { get; set; }
+        public DateTime DataEmissao { get; set; }
         public string Descricao { get; set; }
 
         public void GerarBoleto()
@@ -34,16 +29,21 @@ namespace SistemaDePagamento_Aula2_GamaAcademy.Entidades
             CodigoBarra = Guid.NewGuid();
             DataVencimento = DataEmissao.AddDays(DiasVencimento);
         }
-        
-        public bool BoletoEstaPago()
+
+        public void CalcularJuros()
+        {
+            var taxa = Valor * Juros;
+            Valor = Valor + taxa;
+        }
+
+        public bool EstaPago()
         {
             return Confirmacao;
         }
 
-        public void calcularJuros()
+        public bool EstaVencido()
         {
-            var taxa = Valor * Juros;
-            Valor = Valor + taxa;
+            return DataVencimento < DateTime.Now;
         }
 
         public void Pagar()
@@ -51,5 +51,6 @@ namespace SistemaDePagamento_Aula2_GamaAcademy.Entidades
             DataPagamento = DateTime.Now;
             Confirmacao = true;
         }
+
     }
 }

@@ -8,26 +8,30 @@ namespace SistemaDePagamento_Aula2_GamaAcademy
     class Program
     {
         private static List<Boleto> listaBoletos;
-        private static List<AVista> listaAVista;
-        public bool Autenticacao { get; set; }
+        private static List<Dinheiro> listaAVista;
+        private static List<Televisor> listaTelevisor;
+        private static List<Geladeira> listaGeladeira;
         static void Main(string[] args)
         {
             listaBoletos = new List<Boleto>();
-            listaAVista = new List<AVista>();
+            listaAVista = new List<Dinheiro>();
+            listaTelevisor = new List<Televisor>();
+            listaGeladeira = new List<Geladeira>();
+
 
             while (true)
             {
                 Console.WriteLine("****************************************");
-                Console.WriteLine("****Loja das meninas da Gama Academy****");
+                Console.WriteLine("*********** Lojinha Moderna ************");
                 Console.WriteLine("Selecione uma opção");
-                Console.WriteLine("1-Compra | 2-Pagamento| 3-Relatório");
+                Console.WriteLine("1-Compra | 2-Pagamento de Boleto| 3-Relatório");
 
                 var opcao = int.Parse(Console.ReadLine());
 
                 switch (opcao)
                 {
                     case 1:
-                        Comprar();
+                        ComprarProduto();
                         break;
                     case 2:
                         Pagamento();
@@ -41,10 +45,83 @@ namespace SistemaDePagamento_Aula2_GamaAcademy
             }
         }
 
+        public static void ComprarProduto()
+        {
+            Console.WriteLine("****************************");
+            Console.WriteLine("Escolha o Produto");
+            Console.WriteLine("1-Televisor | 2-Geladeira ");
+
+            var nomeProduto = "";
+            var valorProduto = 0;
+
+            var opcao = int.Parse(Console.ReadLine());
+
+            if (opcao == 1)
+            {
+                nomeProduto = "Televisor";
+                valorProduto = 6000;
+            }
+            else if (opcao == 2)
+            {
+                 nomeProduto = "Geladeira";
+                 valorProduto = 3500;
+            }
+
+            Console.WriteLine("\nCor:");
+            var cor = Console.ReadLine();
+
+            Console.WriteLine("\nVoltagem (110 / 220) :");
+            var voltagem = double.Parse(Console.ReadLine());
+
+            switch (opcao)
+            {
+                case 1:
+                    EscolhaTelevisor(nomeProduto, valorProduto, cor, voltagem);
+                    break;
+                case 2:
+                    EscolhaGeladeira(nomeProduto, valorProduto, cor, voltagem);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public static void EscolhaTelevisor(string nomeProduto, double valorProduto, string cor, double voltagem)
+        {
+            var televisor = new Televisor(nomeProduto, valorProduto, cor, voltagem);
+
+            televisor.Oferta();
+
+            listaTelevisor.Add(televisor);
+
+            foreach (var item in listaTelevisor)
+            {
+                Console.WriteLine($"Parabens! Graças a nossa oferta você esta aquirindo um {item.NomeProduto} de R$6000 por R${item.ValorProduto} de cor {item.Cor} e voltagem {item.Voltagem}v ");
+            }
+            Comprar();
+        }
+
+        public static void EscolhaGeladeira(string nomeProduto, double valorProduto, string cor, double voltagem)
+        {
+            var geladeira = new Geladeira(nomeProduto, valorProduto, cor, voltagem);
+            geladeira.Oferta();
+            listaGeladeira.Add(geladeira);
+            foreach (var item in listaGeladeira)
+            {
+                Console.WriteLine($"Parabens! Graças a nossa oferta você esta aquirindo um {item.NomeProduto} de R$3500 por R${item.ValorProduto} de cor {item.Cor} e voltagem {item.Voltagem}v ");
+            }
+            Comprar();
+        }
+
         public static void Comprar()
         {
-            Console.WriteLine("Digite o Valor da compra:");
-            var valor = Decimal.Parse(Console.ReadLine());
+            var geladeira = listaGeladeira
+                          .FirstOrDefault();
+
+            var televisor = listaTelevisor
+                          .FirstOrDefault();
+
+            var valor = televisor != null ? televisor.ValorProduto : geladeira.ValorProduto;
 
             Console.WriteLine("Digite o CPF do cliente:");
             var cpf = Console.ReadLine();
@@ -52,119 +129,97 @@ namespace SistemaDePagamento_Aula2_GamaAcademy
             Console.WriteLine("Preencha a descrição caso necessário:");
             var descricao = Console.ReadLine();
 
+            Console.WriteLine("****************************");
             Console.WriteLine("Escolha a forma de pagamento");
-            Console.WriteLine("1-À Vista | 2-Boleto ");
+            Console.WriteLine("1-Dinheiro | 2-Boleto ");
 
             var opcao = int.Parse(Console.ReadLine());
 
-            switch (opcao)
+            if (opcao == 1)
             {
-                case 1:
-                    CompraAVista();
-                    break;
-                case 2:
-                    CompraBoleto();
-                    break;
-                default:
-                    break;
+                var dinheiro = new Dinheiro(valor);
+                dinheiro.Pagar();
+
+                Console.WriteLine($"Numero do pagamento {dinheiro.Id} pago no valor: {dinheiro.Valor} ");
+                listaAVista.Add(dinheiro);
             }
-
-            void CompraAVista()
-            {
-                var avista = new AVista(cpf, valor, descricao);
-                avista.GerarAutenticacao();
-
-                Console.WriteLine($"Codigo de autenticação numero {avista.CodigoAutenticacao} gerado com sucesso! Utilize-o para realizar o pagamento!");
-                listaAVista.Add(avista);
-            }
-
-            void CompraBoleto()
+            else
             {
                 var boleto = new Boleto(cpf, valor, descricao);
                 boleto.GerarBoleto();
-            
+
                 Console.WriteLine($"Boleto gerado com sucesso com o numero {boleto.CodigoBarra} com data de vencimento para para o dia {boleto.DataVencimento}");
                 listaBoletos.Add(boleto);
             }
         }
-
+          
         public static void Pagamento()
         {
-            Console.WriteLine("Escolha a forma de pagamento");
-            Console.WriteLine("1-À Vista | 2-Boleto ");
+       
+            Console.WriteLine("digite o codigo de barras:");
+            var numero = Guid.Parse(Console.ReadLine());
+
+            var boleto = listaBoletos
+                .Where(item => item.CodigoBarra == numero)
+                .FirstOrDefault();
+
+            if (boleto is null)
+            {
+                Console.WriteLine($"Boleto de codigo {numero} não encontrado!");
+                return;
+            }
+
+            if (boleto.EstaPago())
+            {
+                Console.WriteLine($"O boleto já foi pago no dia {boleto.DataPagamento}");
+                return;
+            }
+
+            if (boleto.EstaVencido())
+            {
+                boleto.CalcularJuros();
+                Console.WriteLine($"O boleto esta vencido, terá acrescimo de 10% *** R$ {boleto.Valor}");
+            }
+
+            boleto.Pagar();
+            Console.WriteLine($"Boleto de codigo {numero} foi pago com sucesso");
+        }
+
+        public static void Relatorio()
+        {
+            Console.WriteLine("Qual opção de relatório:");
+            Console.WriteLine("1-Dinheiro | 2-Boleto");
+
 
             var opcao = int.Parse(Console.ReadLine());
 
             switch (opcao)
             {
                 case 1:
-                    PgAVista();
+                    RelatorioAVista();
                     break;
                 case 2:
-                    PgBoleto();
+                    RelatorioBoleto();
                     break;
                 default:
                     break;
             }
 
-            void PgAVista()
+        }
+
+        public static void RelatorioAVista()
+        {
+            Console.WriteLine("======== Pagamentos à Vista ======== \n");
+            var avista = listaAVista
+                 .ToList();
+
+            foreach (var item in avista)
             {
-                Console.WriteLine("digite o codigo de autenticação:");
-                var numeroAv = Guid.Parse(Console.ReadLine());
-
-                var avista = listaAVista
-                    .Where(item => item.CodigoAutenticacao == numeroAv)
-                    .FirstOrDefault();
-
-                if (avista is null)
-                {
-                    Console.WriteLine($"Código de autenticãção {numeroAv} não encontrado!");
-                    return;
-                }
-
-                if (avista.EstaPago())
-                {
-                    Console.WriteLine("A sua compra já foi paga!");
-                    return;
-                }
-                avista.PagarAVista();
-                Console.WriteLine($"O pagamento de numero: {numeroAv} foi realizado com sucesso");
-            }
-
-                void PgBoleto()
-            { 
-
-                Console.WriteLine("digite o codigo de barras:");
-                var numero = Guid.Parse(Console.ReadLine());
-
-                var boleto = listaBoletos
-                    .Where(item => item.CodigoBarra == numero)
-                    .FirstOrDefault();
-
-                if(boleto is null)
-                {
-                    Console.WriteLine($"Boleto de codigo {numero} não encontrado!");
-                return;
-                }
-
-                if(boleto.BoletoEstaPago())
-                {
-                    Console.WriteLine("O boleto já foi pago!");
-                    return;
-                }
-
-                if (boleto.DataVencimento < DateTime.Now)
-                {
-                    boleto.calcularJuros();
-                    Console.WriteLine($"O boleto esta vencido, terá acrescimo de 10% *** R$ {boleto.Valor}");
-                }
-
-                boleto.Pagar();
-                Console.WriteLine($"Boleto de codigo {numero} foi pago com sucesso");
+                Console.WriteLine("\n ====");
+                Console.WriteLine($"Pagamento: {item.Id}\nValor:{item.Valor}\nData Pagamento: {item.DataPagamento} ==");
             }
         }
-        
-        public static void Relatorio()
+        public static void RelatorioBoleto()
         {
             Console.WriteLine("Escolha a opção de relatório:");
             Console.WriteLine("1-Pagos | 2-A Pagar | 3-Vencidos");
@@ -176,11 +231,9 @@ namespace SistemaDePagamento_Aula2_GamaAcademy
             {
                 case 1:
                     BoletosPagos();
-                    AVistaPagos();
                     break;
                 case 2:
                     BoletosAPagar();
-                    AVistaAPagar();
                     break;
                 case 3:
                     BoletosVencidos();
@@ -203,19 +256,6 @@ namespace SistemaDePagamento_Aula2_GamaAcademy
                 Console.WriteLine($"Codigo de Barra: {item.CodigoBarra}\nValor:{item.Valor}\nData Pagamento: {item.DataPagamento} ==");
             }
         }
-        public static void AVistaPagos()
-        {
-            Console.WriteLine("============== A Vista =========== \n");
-            var avista = listaAVista
-                 .Where(item => item.ConfirmacaoAVista)
-                 .ToList();
-            foreach (var item in avista)
-            {
-                Console.WriteLine("\n ====");
-                Console.WriteLine($"Codigo de Barra: {item.CodigoAutenticacao}\nValor:{item.Valor}\n ==");
-            }
-        }
-
 
         public static void BoletosVencidos()
         {
@@ -245,20 +285,6 @@ namespace SistemaDePagamento_Aula2_GamaAcademy
             {
                 Console.WriteLine("\n ====");
                 Console.WriteLine($"Codigo de Barra: {item.CodigoBarra}\nValor:{item.Valor}\nData Pagamento: {item.DataPagamento} ==");
-            }
-        }
-
-        public static void AVistaAPagar()
-        {
-            Console.WriteLine("============ A Vista ============");
-            var avista = listaAVista
-                 .Where(item => item.ConfirmacaoAVista == false)
-                 .ToList();
-
-            foreach (var item in avista)
-            {
-                Console.WriteLine("\n ====");
-                Console.WriteLine($"Codigo de Autenticação: {item.CodigoAutenticacao}\nValor:{item.Valor}\n==");
             }
         }
     }
